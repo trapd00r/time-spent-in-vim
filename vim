@@ -115,9 +115,8 @@ sub vim {
 
 sub write_struct {
   my($struct, $time, @files) = @_;
-  my $struct = shift;
 
-  croak("'$struct' is not a valid HASH ref") if ref($struct) ne 'HASH';
+  #croak("'$struct' is not a valid HASH ref") if ref($struct) ne 'HASH';
 
   for my $file(@files) {
     if( ($file =~ /^\s+$/)
@@ -138,7 +137,7 @@ sub write_struct {
 
 sub get_struct {
   my $struct;
-  -f $history and $struct = retrieve($history);
+  (-f $history) and (!-z $history) and $struct = retrieve($history);
   return $struct;
 }
 
