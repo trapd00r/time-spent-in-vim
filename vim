@@ -10,7 +10,7 @@ use Storable;
 use Pod::Usage;
 use Getopt::Long;
 use Time::localtime;
-use Term::ExtendedColor;
+use Term::ExtendedColor qw(fg);
 
 #use Data::Dumper;
 #$Data::Dumper::Terse     = 1;
