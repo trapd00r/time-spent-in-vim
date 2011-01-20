@@ -130,9 +130,15 @@ sub write_struct {
       next;
     }
     #my $basename = basename($file); # NOTE ..?
-    $struct->{$file} += $time;
-    store($struct, $history);
+    my $time = ($struct->{$file} + $time);
+    if($time > 60) {
+      $struct->{$file} += $time;
+    }
+    else {
+      next;
+    }
   }
+  store($struct, $history);
 }
 
 sub get_struct {
@@ -147,9 +153,10 @@ sub output_term {
 
   my(undef, undef, undef, $who) = caller(1);
 
+  return if ( ($d == 0) && ($h == 0) && ($m < 30) );
 
   if($d == 0) {
-    print " " x 12;
+    print " " x 9;
   }
   else {
     printf("%s day%s,",
