@@ -159,10 +159,10 @@ sub output_term {
     print " " x 9;
   }
   else {
-    printf("%s day%s,",
+    printf("%s day%s",
       color_by_value( sprintf("% 3d", $d)),
       #fg('grey7', fg('bold', sprintf("% 3d", $d))),
-      ( ($d > 1) or ($d == 0) ) ? 's' : ' ',
+      ( ($d > 1) or ($d == 0) ) ? 's,' : ', ',
     );
   }
 
@@ -170,10 +170,10 @@ sub output_term {
     print " " x 10;
   }
   else {
-    printf("%s hour%s,",
+    printf("%s hour%s",
       color_by_value( sprintf("% 3d", $h)),
       #fg('grey10', fg('bold', sprintf("% 3d", $h))),
-      ( ($h > 1) or ($h == 0) ) ? 's' : ' ',
+      ( ($h > 1) or ($h == 0) ) ? 's,' : ', ',
     );
   }
 
@@ -181,16 +181,17 @@ sub output_term {
     print " " x 10;
   }
   else {
-    printf("%s minute%s",
+    printf("%s minute%s%s",
       #color_by_value( sprintf("% 3d", $m)),
       fg('grey14', fg('bold', sprintf("% 3d", $m))),
-      ( ($m > 1) or ($m == 0) )  ? 's' : ' ',
+      ( ($m == 1) ) ? ' ' : '',
+      ( ($m > 1) or ($m == 0) )  ? 's and' : ' and',
     );
   }
 
-  printf(" %s %s second%s",
+  printf(" %s%s second%s",
     #color_by_value( sprintf("% 3d", $s)),
-    ($m == 0) ? '    ' : fg('italic', 'and'),
+    ($m == 0) ? '      ' : ' ',
     fg('grey17', fg('bold', sprintf("% 3d", $s))),
     ( ($s > 1 ) or ($s == 0) ) ? 's' : ' ',
   );
