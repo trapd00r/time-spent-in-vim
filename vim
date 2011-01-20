@@ -189,7 +189,7 @@ sub output_term {
     );
   }
 
-  printf(" %s%s second%s",
+  printf("%s%s second%s",
     #color_by_value( sprintf("% 3d", $s)),
     ($m == 0) ? '      ' : ' ',
     fg('grey17', fg('bold', sprintf("% 3d", $s))),
