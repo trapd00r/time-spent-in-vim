@@ -2,9 +2,10 @@
 
 use vars qw($VERSION);
 my $APP  = 'time-spent-in-vim';
-$VERSION = '0.140';
+$VERSION = '0.142';
 
 use strict;
+use Cwd qw(abs_path);
 use Carp qw/croak/;
 use Storable;
 use Pod::Usage;
@@ -41,6 +42,8 @@ for my $file(@files) {
     undef($file);
   }
 }
+
+@files = map { abs_path($_) } @files;
 
 if($opt_get_stats)  {
   get_statistics( @files );
@@ -129,14 +132,13 @@ sub write_struct {
     ) {
       next;
     }
-    #my $basename = basename($file); # NOTE ..?
-    my $time = ($struct->{$file} + $time);
-    if($time > 60) {
-      $struct->{$file} += $time;
-    }
-    else {
-      next;
-    }
+    $struct->{$file} += $time;
+    #if($time > 60) {
+    #  $struct->{$file} += $time;
+    #}
+    #else {
+    #  next;
+    #}
   }
   store($struct, $history);
 }
@@ -153,7 +155,7 @@ sub output_term {
 
   my(undef, undef, undef, $who) = caller(1);
 
-  return if ( ($d == 0) && ($h == 0) && ($m < 30) );
+  #return if ( ($d == 0) && ($h == 0) && ($m < 30) );
 
   if($d == 0) {
     print " " x 9;
