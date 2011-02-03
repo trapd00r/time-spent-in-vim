@@ -2,7 +2,7 @@
 
 use vars qw($VERSION);
 my $APP  = 'time-spent-in-vim';
-$VERSION = '0.142';
+$VERSION = '0.144';
 
 use strict;
 use Cwd qw(abs_path);
@@ -12,6 +12,7 @@ use Pod::Usage;
 use Getopt::Long;
 use Time::localtime;
 use Term::ExtendedColor qw(fg);
+use File::LsColor qw(ls_color);
 
 #use Data::Dumper;
 #$Data::Dumper::Terse     = 1;
@@ -92,13 +93,22 @@ sub format_time {
 sub color_by_value {
   my $value = shift;
 
-  return fg('bold', fg('magenta16', $value)) if $value < 2;
-  return fg('bold', fg('magenta22', $value)) if $value < 4;
-  return fg('bold', fg('yellow9',   $value)) if $value < 6;
-  return fg('bold', fg('orange4',   $value)) if $value < 8;
-  return fg('bold', fg('red1',      $value)) if $value < 10;
-  return fg('bold', fg('blue4',     $value)) if $value < 12;
-  return fg('bold', fg('blue10',    $value)) if $value < 14;
+  return fg('bold', fg('yellow1',  $value)) if $value < 2;
+  return fg('bold', fg('yellow3',  $value)) if $value < 4;
+  return fg('bold', fg('yellow5',  $value)) if $value < 6;
+  return fg('bold', fg('yellow7',  $value)) if $value < 8;
+  return fg('bold', fg('yellow9',  $value)) if $value < 10;
+  return fg('bold', fg('yellow11', $value)) if $value < 12;
+  return fg('bold', fg('yellow13', $value)) if $value < 14;
+  return fg('bold', fg('yellow15', $value)) if $value < 16;
+  return fg('bold', fg('yellow17', $value)) if $value < 18;
+  return fg('bold', fg('yellow18', $value)) if $value < 20;
+  return fg('bold', fg('orange5',  $value)) if $value < 22;
+  return fg('bold', fg('red1',     $value)) if $value < 24;
+  return fg('bold', fg('red2',     $value)) if $value < 26;
+  return fg('bold', fg('red3',     $value)) if $value < 28;
+  return fg('bold', fg('red4',     $value)) if $value < 30;
+  return fg('bold', fg('red5',     $value)) if $value < 32;
 
   return $value;
 }
@@ -198,26 +208,10 @@ sub output_term {
     ( ($s > 1 ) or ($s == 0) ) ? 's' : ' ',
   );
 
+
   if($who eq __PACKAGE__ . '::get_statistics') {
-    if($f =~ /\.pl$/) {
-      $f = fg('purple15', $f);
-    }
-    elsif($f =~ /\.pm$/) {
-      $f = fg('magenta11', $f);
-    }
-    elsif($f =~ /\.t$/) {
-      $f = fg('blue1', $f);
-    }
-    elsif($f =~ /\.sh$/) {
-      $f = fg('grey14', $f);
-    }
-    elsif($f =~ /readme/i) {
-      $f = fg('red3', $f);
-    }
-    elsif($f =~ /makefile/i) {
-      $f = fg('red1', fg('bold',  $f));
-    }
-    printf(" @{[fg('italic', fg('grey10', 'of total hacking time on '))]} %s\n",
+    $f = ls_color($f);
+    printf(" @{[fg('italic', fg('grey10', ' spent on '))]} %s\n",
       $f
     );
   }
@@ -227,9 +221,8 @@ sub output_term {
 
 }
 
-sub basename {
-  return map { -f $_ && $_ =~ s|.+/(.+)$|$1|; $_ } @_;
-}
+
+__END__
 
 =pod
 
@@ -257,9 +250,17 @@ project/file edited.
   magnus@trapd00r.se
   http://japh.se
 
+=head1 CONTRIBUTORS
+
+None required yet.
+
 =head1 COPYRIGHT
 
-Copyright (C) 2011 Magnus Woldrich. All right reserved.
+Copyright 2011 B<time-spent-in-vim>s L</AUTHOR> and L</CONTRIBUTORS> as listed
+above.
+
+=head1 LICENSE
+
 This program is free software; you can redistribute it and/or modify it under
 the same terms as Perl itself.
 
