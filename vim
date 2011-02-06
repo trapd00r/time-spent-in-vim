@@ -210,7 +210,7 @@ sub output_term {
 
 
   if($who eq __PACKAGE__ . '::get_statistics') {
-    $f = ls_color($f);
+    ($f) = ls_color($f);
     printf(" @{[fg('italic', fg('grey10', ' spent on '))]} %s\n",
       $f
     );
