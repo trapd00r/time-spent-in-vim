@@ -2,7 +2,7 @@
 
 use vars qw($VERSION);
 my $APP  = 'time-spent-in-vim';
-$VERSION = '0.144';
+$VERSION = '0.145';
 
 use strict;
 use Cwd qw(abs_path);
@@ -117,7 +117,7 @@ sub color_by_value {
 sub vim {
   my $time_start = time();
 
-  system('/usr/bin/vim', '-p', @vim_args, @files);
+  system('/usr/bin/vim', @vim_args, @files);
 
   my $time_end   = time();
   my $time_spent = ($time_end - $time_start);
