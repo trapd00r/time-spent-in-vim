@@ -2,7 +2,7 @@
 
 use vars qw($VERSION);
 my $APP  = 'time-spent-in-vim';
-$VERSION = '0.145';
+$VERSION = '0.146';
 
 use strict;
 use Cwd qw(abs_path);
@@ -66,14 +66,17 @@ sub get_statistics {
   my $counter = 0;
   if(!@f) {
     for my $file(sort{ $s->{$b} <=> $s->{$a} } keys(%{$s})) {
+      #return if $counter == 10;
       my($d, $h, $m, $s) = format_time( $s->{$file} );
       output_term($d, $h, $m, $s, $file, $counter);
       $counter++;
     }
     return;
   }
+  $counter = 0;
 
   for my $file(@f) {
+    return if $counter == 10;
     my($d, $h, $m, $s) = format_time( $s->{$file} );
     output_term($d, $h, $m, $s, $file, $counter);
     $counter++;
@@ -211,8 +214,9 @@ sub output_term {
 
   if($who eq __PACKAGE__ . '::get_statistics') {
     ($f) = ls_color($f);
+    chomp $f;
     printf(" @{[fg('italic', fg('grey10', ' spent on '))]} %s\n",
-      $f
+      $f,
     );
   }
   else {
