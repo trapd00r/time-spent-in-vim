@@ -1,0 +1,43 @@
+#!/usr/bin/perl
+# Get at the time spent on a single individual file in vim.
+use strict;
+use Storable;
+use Cwd qw(abs_path);
+use Time::localtime;
+use File::LsColor qw(ls_color);
+
+die("USAGE: $0 [ FILE | PATTERN ]...\n") if !@ARGV;
+
+my $f = shift;
+my $t = retrieve("$ENV{XDG_DATA_HOME}/time_spent_in_vim.db");
+
+
+if(!-e $f) {
+  my $regex = qr{ $f }x;
+
+  warn("$f does not exist in ./\n");
+  $f = undef;
+
+  for my $file(keys(%{ $t })) {
+    if($file =~ m{ $regex }x) {
+      printf("%s, %s\n", $file, $t->{$file});
+    }
+  }
+}
+else {
+  $f = abs_path( $f );
+  die("No time spent hacking on $f\n") if not exists($t->{$f});
+
+  my $time = localtime( $t->{$f} );
+
+  my ($h, $m) = ($time->hour, $time->min);
+  printf("%s\n  %d hour%s, %d minute%s\n",
+    ls_color( $f ),
+
+    $h,
+    ( ($h > 1) || ($h == 0) ) ? 's' : '',
+
+    $m,
+    ( ($m > 1) || ($m == 0) ) ? 's' : '',
+  );
+}
