@@ -1,0 +1,32 @@
+#!/usr/bin/perl
+# Delete elements where hacking time is < 30m
+use strict;
+use Storable;
+use File::LsColor;
+use Term::ExtendedColor qw(:attributes);
+
+*ls_color = *File::LsColor::ls_color_internal;
+
+my $t = retrieve("$ENV{XDG_DATA_HOME}/time_spent_in_vim.db");
+
+my $changed = 0;
+print bold("Files with < 30 minutes of hacking time:"), "\n";
+
+for my $file(sort { $t->{$a} <=> $t->{$b} } keys(%{ $t })) {
+  if($t->{$file} < 1800) {
+    printf(
+      "Delete %s from database? You've hacked on it for %s minutes [y/N] ",
+      ls_color($file), bold( sprintf("%d", $t->{$file} / 60)),
+    );
+    chomp(my $answer = <STDIN>);
+    if(lc($answer) eq 'y') {
+      delete($t->{$file});
+      $changed++;
+    }
+    else {
+      next;
+    }
+  }
+}
+
+store($t, "$ENV{XDG_DATA_HOME}/time_spent_in_vim.db") if $changed;
