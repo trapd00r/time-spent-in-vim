@@ -2,7 +2,7 @@
 
 use vars qw($VERSION);
 my $APP  = 'time-spent-in-vim';
-$VERSION = '0.146';
+$VERSION = '0.150';
 
 use strict;
 use Cwd qw(abs_path);
@@ -34,7 +34,7 @@ my @files = @ARGV;
 my @vim_args;
 
 for my $file(@files) {
-  if($file =~ m/^[ls]et /) {
+  if( ($file =~ m{^(?:(?:ht|f)tp://)}) || ($file =~ m{^([ls]et)} and !-f $1 ) ) {
     system('/usr/bin/vim', @files);
     exit;
   }
