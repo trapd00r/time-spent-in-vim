@@ -15,16 +15,30 @@ project/file edited.
 
 # OPTIONS
 
-  -t, --total   show a total summary of time spent
+  -t, --total   show the total summary
+
 # AUTHOR
 
-  Magnus Woldrich
-  CPAN ID: WOLDRICH
-  magnus@trapd00r.se
-  http://japh.se
+    Magnus Woldrich
+    CPAN ID: WOLDRICH
+    magnus@trapd00r.se
+    http://japh.se
+
+# CONTRIBUTORS
+
+None required yet.
+
+# REPORTING BUGS
+
+Report bugs and/or feature requests to <magnus@trapd00r.se> or directly on the
+issue tracker located at <http://github.com/trapd00r/pimpd2/issues>.
 
 # COPYRIGHT
 
-Copyright (C) 2011 Magnus Woldrich. All right reserved.
-This program is free software; you can redistribute it and/or modify it under
-the same terms as Perl itself.
+Copyright 2011 the **time-spent-in-vim** "AUTHOR" and "CONTRIBUTORS" as listed
+above.
+
+# LICENSE
+
+This application is free software; you may redistribute it and/or modify it
+under the same terms as Perl itself.
