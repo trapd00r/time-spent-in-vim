@@ -2,7 +2,7 @@
 
 use vars qw($VERSION);
 my $APP  = 'time-spent-in-vim';
-$VERSION = '0.150';
+$VERSION = '0.154';
 
 use strict;
 use Cwd qw(abs_path);
@@ -14,27 +14,23 @@ use Time::localtime;
 use Term::ExtendedColor qw(fg);
 use File::LsColor qw(ls_color);
 
-#use Data::Dumper;
-#$Data::Dumper::Terse     = 1;
-#$Data::Dumper::Indent    = 1;
-#$Data::Dumper::Useqq     = 1;
-#$Data::Dumper::Deparse   = 1;
-#$Data::Dumper::Quotekeys = 0;
-#$Data::Dumper::Sortkeys  = 1;
-
 my $history = "$ENV{XDG_DATA_HOME}/time_spent_in_vim.db";
 
 my $opt_get_stats;
 GetOptions(
-  'total|stats' => \$opt_get_stats,
-  'h|help'      => sub { pod2usage( verbose => 1 ); },
+  'total'  => \$opt_get_stats,
+  'h|help' => sub { pod2usage( verbose => 1 ); },
 );
 
 my @files = @ARGV;
 my @vim_args;
 
 for my $file(@files) {
-  if( ($file =~ m{^(?:(?:ht|f)tp://)}) || ($file =~ m{^([ls]et)} and !-f $1 ) ) {
+  if(
+      ($file =~ m{ ^(?: (?:ht|f)tps?://) }x )
+        ||
+      ($file =~ m{ ^([ls]et) }x and !-f $1)
+    ) {
     system('/usr/bin/vim', @files);
     exit;
   }
