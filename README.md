@@ -2,43 +2,39 @@
 
 time-spent-in-vim - vim wrapper collecting statistics of the vim usage
 
-![screenshot](http://perl.japh.se/devel/time-spent-in-vim/vim.png)
-
 # USAGE
 
-  vim [OPTIONS] FILES...
+    export EDITOR='time-spent-in-vim'
+    alias     vim='time-spent-in-vim
+
+    vim [OPTIONS] FILES...
 
 # DESCRIPTION
 
-__time-spent-in-vim__ is a Vim wrapper that collects time spent for each
+**time-spent-in-vim** is a Vim wrapper that collects time spent for each
 project/file edited.
 
 # OPTIONS
 
-  -t, --total   show the total summary
+    -t, --total   show a total summary of time spent
 
 # AUTHOR
 
     Magnus Woldrich
     CPAN ID: WOLDRICH
-    magnus@trapd00r.se
+    m@japh.se
     http://japh.se
 
 # CONTRIBUTORS
 
 None required yet.
 
-# REPORTING BUGS
-
-Report bugs and/or feature requests to <magnus@trapd00r.se> or directly on the
-issue tracker located at <http://github.com/trapd00r/pimpd2/issues>.
-
 # COPYRIGHT
 
-Copyright 2011 the **time-spent-in-vim** "AUTHOR" and "CONTRIBUTORS" as listed
-above.
+Copyright 2011, 2019- **time-spent-in-vim**s ["AUTHOR"](#author) and
+["CONTRIBUTORS"](#contributors) as listed above.
 
 # LICENSE
 
-This application is free software; you may redistribute it and/or modify it
-under the same terms as Perl itself.
+This program is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself.
