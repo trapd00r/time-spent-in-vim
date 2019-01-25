@@ -1,8 +1,9 @@
 #!/usr/bin/perl
+# vim:ft=perl:et:
 
 use vars qw($VERSION);
 my $APP  = 'time-spent-in-vim';
-$VERSION = '0.154';
+$VERSION = '0.156';
 
 use strict;
 use Cwd qw(abs_path);
@@ -14,6 +15,8 @@ use Time::localtime;
 use Term::ExtendedColor qw(fg);
 use File::LsColor qw(ls_color);
 
+# set $EDITOR to this wrapper
+my $editor  = '/usr/bin/vim';
 my $history = "$ENV{XDG_DATA_HOME}/time_spent_in_vim.db";
 
 my $opt_get_stats;
@@ -31,7 +34,7 @@ for my $file(@files) {
         ||
       ($file =~ m{ ^([ls]et) }x and !-f $1)
     ) {
-    system('/usr/bin/vim', @files);
+    system($editor, @files);
     exit;
   }
   if( (! -e $file) and ($file =~ /^-/) ) {
@@ -116,7 +119,7 @@ sub color_by_value {
 sub vim {
   my $time_start = time();
 
-  system('/usr/bin/vim', @vim_args, @files);
+  system($editor, @vim_args, @files);
 
   my $time_end   = time();
   my $time_spent = ($time_end - $time_start);
@@ -232,6 +235,9 @@ time-spent-in-vim - vim wrapper collecting statistics of the vim usage
 
 =head1 USAGE
 
+  export EDITOR='time-spent-in-vim'
+  alias     vim='time-spent-in-vim
+
   vim [OPTIONS] FILES...
 
 =head1 DESCRIPTION
@@ -247,7 +253,7 @@ project/file edited.
 
   Magnus Woldrich
   CPAN ID: WOLDRICH
-  magnus@trapd00r.se
+  m@japh.se
   http://japh.se
 
 =head1 CONTRIBUTORS
@@ -256,8 +262,8 @@ None required yet.
 
 =head1 COPYRIGHT
 
-Copyright 2011 B<time-spent-in-vim>s L</AUTHOR> and L</CONTRIBUTORS> as listed
-above.
+Copyright 2011, 2019- B<time-spent-in-vim>s L</AUTHOR> and
+L</CONTRIBUTORS> as listed above.
 
 =head1 LICENSE
 
