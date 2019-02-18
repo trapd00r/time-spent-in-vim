@@ -22,7 +22,7 @@ my $history = "$ENV{XDG_DATA_HOME}/time_spent_in_vim.db";
 
 my $opt_get_stats;
 GetOptions(
-  'total'  => \$opt_get_stats,
+  't|total'  => \$opt_get_stats,
   'h|help' => sub { pod2usage( verbose => 1 ); },
 );
 

@@ -2,6 +2,8 @@
 
 time-spent-in-vim - vim wrapper collecting statistics of the vim usage
 
+![tsiv](/extra/tsiv.png)
+
 # USAGE
 
     export EDITOR='time-spent-in-vim'
